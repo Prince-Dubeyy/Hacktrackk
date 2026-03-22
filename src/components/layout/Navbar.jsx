@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
-import { Moon, Sun, Menu, X } from 'lucide-react';
+import { Moon, Sun, Menu, X, MessageCircle } from 'lucide-react';
 
 export function Navbar() {
   const { user, isAdmin, loginWithGoogle, logout } = useAuth();
@@ -45,6 +45,13 @@ export function Navbar() {
           <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full w-10 h-10 hover:bg-primary/10 transition" aria-label="Toggle theme">
             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </Button>
+
+          <a href="https://chat.whatsapp.com/BCx87V8Ld2tE9vORSnqzeq" target="_blank" rel="noreferrer">
+            <Button variant="ghost" size="sm" className="gap-2 text-green-600 hover:text-green-700 hover:bg-green-500/10 transition-all duration-200">
+              <MessageCircle className="w-4 h-4" />
+              Community
+            </Button>
+          </a>
 
           {isAdmin && (
             <span className="px-3 py-1 text-xs font-bold rounded-full bg-green-500/20 text-green-700 uppercase tracking-wider">
@@ -112,6 +119,11 @@ export function Navbar() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-border/40 bg-background/50 backdrop-blur-sm p-4 animate-in slide-in-from-top-2 space-y-3">
+          <a href="https://chat.whatsapp.com/BCx87V8Ld2tE9vORSnqzeq" target="_blank" rel="noreferrer" className="block w-full" onClick={() => setIsMobileMenuOpen(false)}>
+            <Button variant="outline" className="w-full justify-start gap-2 border-green-500/30 text-green-600 hover:bg-green-500/10" size="sm">
+              <MessageCircle className="w-4 h-4" /> Join WhatsApp Community
+            </Button>
+          </a>
           {isAdmin && (
             <div className="px-3 py-2 text-xs font-bold rounded-lg bg-green-500/20 text-green-700 uppercase tracking-wider text-center">
               👑 Admin Mode

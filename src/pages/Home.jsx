@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getHackathons } from './hackathons';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { Search, Calendar, MapPin, Users, TrendingUp, Zap } from 'lucide-react';
+import { Search, Calendar, MapPin, Users, TrendingUp, Zap, MessageCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export function Home() {
@@ -14,6 +14,11 @@ export function Home() {
   const [filter, setFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [sortBy, setSortBy] = useState('upcoming');
+  const searchSectionRef = useRef(null);
+
+  const scrollToSearch = () => {
+    searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -145,7 +150,7 @@ export function Home() {
       </section>
 
       {/* Search & Filters */}
-      <section className="sticky top-16 z-20 bg-background/80 backdrop-blur-xl border-b border-border/40 py-4 px-4">
+      <section ref={searchSectionRef} className="sticky top-16 z-20 bg-background/80 backdrop-blur-xl border-b border-border/40 py-4 px-4">
         <div className="container mx-auto space-y-4">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -320,6 +325,37 @@ export function Home() {
         </div>
       </section>
 
+      {/* Community Section */}
+      <section className="px-4 py-12">
+        <div className="container mx-auto">
+          <div className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-xl flex flex-col md:flex-row items-center">
+            <div className="p-8 md:p-12 flex-1 space-y-4 text-center md:text-left">
+              <div className="inline-block px-3 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-600 text-xs font-bold uppercase tracking-wider">
+                Our Community
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Join the Hacker Network</h2>
+              <p className="text-muted-foreground text-lg max-w-xl">
+                Connect with thousands of innovators, find teammates for your next project, and stay updated with the latest hackathon news in our official WhatsApp community.
+              </p>
+              <div className="pt-2">
+                <a href="https://chat.whatsapp.com/BCx87V8Ld2tE9vORSnqzeq" target="_blank" rel="noreferrer">
+                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white gap-2 shadow-lg shadow-green-600/20 transition-all duration-300 hover:scale-105 active:scale-95">
+                    <MessageCircle className="w-5 h-5" />
+                    Join WhatsApp Community
+                  </Button>
+                </a>
+              </div>
+            </div>
+            <div className="w-full md:w-1/3 bg-gradient-to-br from-green-500/20 to-green-600/10 p-12 flex items-center justify-center border-l border-border/40">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-green-500/20 blur-3xl rounded-full" />
+                <MessageCircle className="w-32 h-32 text-green-600 relative opacity-80" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       {!loading && hackathons.length > 0 && (
         <section className="px-4 py-12 md:py-16">
@@ -329,7 +365,11 @@ export function Home() {
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                 Join thousands of innovators on VisionX. Find the perfect hackathon that matches your skills and ambitions.
               </p>
-              <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-primary/80">
+              <Button 
+                size="lg" 
+                className="gap-2 bg-gradient-to-r from-primary to-primary/80"
+                onClick={scrollToSearch}
+              >
                 🚀 Start Exploring
               </Button>
             </div>
