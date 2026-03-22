@@ -44,7 +44,9 @@ export function Admin() {
     location: '',
     description: '',
     deadline: '',
-    link: ''
+    link: '',
+    teamALink: '',
+    teamBLink: ''
   });
 
   const fetchHackathons = async () => {
@@ -91,7 +93,9 @@ export function Admin() {
         location: hackathon.location || '',
         description: hackathon.description || '',
         deadline: hackathon.deadline || '',
-        link: hackathon.link || ''
+        link: hackathon.link || '',
+        teamALink: hackathon.teamALink || '',
+        teamBLink: hackathon.teamBLink || ''
       });
     } else {
       setEditingId(null);
@@ -102,7 +106,9 @@ export function Admin() {
         location: '',
         description: '',
         deadline: '',
-        link: ''
+        link: '',
+        teamALink: '',
+        teamBLink: ''
       });
     }
     setIsModalOpen(true);
@@ -445,7 +451,10 @@ export function Admin() {
           </div>
 
           <div>
-            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">External Registration Link (Optional)</label>
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide flex items-center gap-2">
+              <span>External Registration Link (Optional)</span>
+              <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground font-normal">Public Website</span>
+            </label>
             <Input
               type="url"
               name="link"
@@ -454,6 +463,37 @@ export function Admin() {
               placeholder="https://example.com/register"
               className="h-12 rounded-lg text-base"
             />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold mb-2 uppercase tracking-wide flex items-center gap-2 text-primary/80">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span>Team A Invite Link</span>
+              </label>
+              <Input
+                type="url"
+                name="teamALink"
+                value={formData.teamALink}
+                onChange={handleChange}
+                placeholder="https://discord.gg/..."
+                className="h-12 rounded-lg text-base border-primary/20 focus:border-primary"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold mb-2 uppercase tracking-wide flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
+                <span>Team B Invite Link</span>
+              </label>
+              <Input
+                type="url"
+                name="teamBLink"
+                value={formData.teamBLink}
+                onChange={handleChange}
+                placeholder="https://whatsapp.com/..."
+                className="h-12 rounded-lg text-base border-cyan-500/20 focus:border-cyan-500"
+              />
+            </div>
           </div>
 
           <div>
